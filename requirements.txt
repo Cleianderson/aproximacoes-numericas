@@ -1,0 +1,16 @@
+colorama==0.4.4
+cycler==0.10.0
+future==0.18.2
+kiwisolver==1.3.1
+matplotlib==3.4.1
+mpmath==1.2.1
+npyscreen==4.10.5
+numpy==1.20.2
+Pillow==8.2.0
+pyfiglet==0.8.post1
+pyparsing==2.4.7
+python-dateutil==2.8.1
+six==1.15.0
+sympy==1.7.1
+wcwidth==0.2.5
+yapf==0.31.0
