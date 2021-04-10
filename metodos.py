@@ -38,10 +38,6 @@ class EulerMelhorado(Euler):
 
 class RungeKutta(Euler):
     def approach_to(self, point, amp) -> float:
-        k1 = 0
-        k2 = 0
-        k3 = 0
-        k4 = 0
         t, y = self.t0, self.y0
 
         # y_n+1 = y_n + hf(t_n,y_n)
@@ -49,7 +45,7 @@ class RungeKutta(Euler):
             k1 = self.fn(t, y)
             k2 = self.fn(t + amp / 2, y + amp * k1 / 2)
             k3 = self.fn(t + amp / 2, y + amp * k2 / 2)
-            k4 = self.fn(t + amp / 2, y + amp * k3)
+            k4 = self.fn(t + amp, y + amp * k3)
             y = y + amp * (k1 + 2 * k2 + 2 * k3 + k4) / 6
             t = t + amp
         return y
