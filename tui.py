@@ -15,33 +15,33 @@ class App(npyscreen.StandardApp):
                      minimum_lines=self.rows)
 
 
-class MainForm(npyscreen.FormBaseNew):
+class MainForm(npyscreen.ActionFormV2WithMenus):
     def __init__(self, *args, **kwords):
         super(MainForm, self).__init__(*args, **kwords)
         self.CANCEL_BUTTON_TEXT = 'Calcular'
         self.OK_BUTTON_TEXT = 'Sair'
 
     def create(self):
-        x, y = self.useable_space()
-
-        self.on_cancel = self.btn_press
+        y, x = self.curses_pad.getmaxyx()
 
         self.fn = self.add(TitleTxt, name='Função f(t,y)')
         self.delta_h = self.add(TitleTxt, name='Delta t')
         self.t0 = self.add(TitleTxt, name='t0')
         self.y0 = self.add(TitleTxt, name='y0')
         self.point = self.add(TitleTxt, name='Ponto')
-        self.output1 = self.add(OutputText,
-                                name='Método de Euler',
-                                rely=y - (y + 6))
-        self.output2 = self.add(OutputText,
-                                name='Método de Euler Melhorado',
-                                rely=y - (y + 5))
-        self.output3 = self.add(OutputText,
-                                name='Runge-Kutta',
-                                rely=y - (y + 4))
-        self.btn_cancel = self.add(npyscreen.MiniButtonPress, relx=-x, rely=-self.parentApp.cols-10)
+        self.output1 = self.add(OutputText, name='Método de Euler')
+        self.output2 = self.add(OutputText, name='Método de Euler Melhorado')
+        self.output3 = self.add(OutputText, name='Runge-Kutta')
 
+        self.btn_ok = self.add(npyscreen.MiniButtonPress,
+                               name='calcular',
+                               rely=-4)
+        self.btn_cancel = self.add(npyscreen.MiniButtonPress,
+                                   name='sair',
+                                   rely=-4,
+                                   relx=15)
+        self.btn_cancel.when_pressed_function = self.on_exit
+        self.btn_ok.when_pressed_function = self.btn_press
 
     # Override method that triggers when you click the 'ok'
     def btn_press(self):
@@ -61,8 +61,10 @@ class MainForm(npyscreen.FormBaseNew):
         self.display()
 
     # Override method that triggers when you click the 'cancel'
-    def on_ok(self):
+    def on_exit(self):
         self.parentApp.setNextForm(None)
+        self.exit_editing()
+        # self.display()
 
 
 class TitleTxt(npyscreen.TitleText):
