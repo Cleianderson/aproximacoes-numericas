@@ -1,8 +1,4 @@
 class Euler:
-    t0: float
-    y0: float
-    fn = lambda x: x
-
     def __init__(self, fn, t0, y0):
         self.t0 = t0
         self.y0 = y0
